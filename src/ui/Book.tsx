@@ -1,36 +1,55 @@
+// src/ui/Book.tsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import Page from './pages/Page';
 import Cover from './pages/Cover';
 import Product from './pages/Product';
 import Info from './pages/Info';
 
-export default function Book({ pages }:{ pages:any[] }){
-  const [i,setI]=useState(0);
-  const canPrev = i>0, canNext = i<pages.length-1;
-  const go=(d:number)=> setI(v=> Math.min(Math.max(v+d,0), pages.length-1));
-  const page=pages[i];
-  const variants:any={ enter:(d:number)=>({ rotateX:d>0?10:-10, y:d>0?40:-40, opacity:0 }), center:{ rotateX:0,y:0,opacity:1 }, exit:(d:number)=>({ rotateX:d>0?-10:10, y:d>0?-40:40, opacity:0 }) };
+type PageData = {
+  type: 'cover' | 'product' | 'info';
+  // puedes incluir otras props según tu estructura
+  [key: string]: any;
+};
+
+export default function Book({ pages }: { pages: PageData[] }) {
+  const [i, setI] = useState(0);
+
+  const canPrev = i > 0;
+  const canNext = i < pages.length - 1;
 
   return (
-    <div className="relative w-full max-w-[480px] mx-auto">
-      <div className="aspect-[9/16] bg-white rounded-[18px] border border-black/5 overflow-hidden book-shadow">
-        <AnimatePresence mode="wait" custom={1}>
-          <motion.div key={i+'-'+(page?.id||'x')} custom={1} initial="enter" animate="center" exit="exit" variants={variants} transition={{type:'spring',stiffness:180, damping:20}} className="h-full">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ width: 480, margin: '0 auto' }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={i}
+            initial={{ rotateX: 10, y: 40, opacity: 0 }}
+            animate={{ rotateX: 0, y: 0, opacity: 1 }}
+            exit={{ rotateX: -10, y: -40, opacity: 0 }}
+            transition={{ duration: 0.35 }}
+          >
             <Page>
-              {page?.type==='cover' && <Cover data={page} />}
-              {page?.type==='product' && <Product data={page} />}
-              {page?.type==='info' && <Info data={page} />}
-              {!page && <div className="grid place-items-center h-full">Sin datos</div>}
+              {pages[i]?.type === 'cover' && <Cover {...pages[i]} />}
+              {pages[i]?.type === 'product' && <Product data={pages[i]} />}
+              {pages[i]?.type === 'info' && <Info {...pages[i]} />}
+
+              {!pages[i] && <div style={{ padding: 24 }}>Sin datos</div>}
             </Page>
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="flex items-center justify-between mt-3">
-        <button onClick={()=>go(-1)} disabled={!canPrev} className={`px-4 py-2 rounded-xl border border-black/10 bg-white shadow-sm ${!canPrev?'opacity-40':''}`}>← Anterior</button>
-        <div className="text-sm opacity-70">{i+1} / {pages.length||1}</div>
-        <button onClick={()=>go(1)} disabled={!canNext} className={`px-4 py-2 rounded-xl border border-black/10 bg-white shadow-sm ${!canNext?'opacity-40':''}`}>Siguiente →</button>
+
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+        <button disabled={!canPrev} onClick={() => setI((n) => Math.max(0, n - 1))}>
+          ◀ Anterior
+        </button>
+        <button disabled={!canNext} onClick={() => setI((n) => Math.min(pages.length - 1, n + 1))}>
+          Siguiente ▶
+        </button>
       </div>
     </div>
   );
 }
+
