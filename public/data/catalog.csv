@@ -1,6 +1,0 @@
-id,order,type,title,subtitle,category,price,features,media_type,media_url,rotation,zoom,link,body
-cover,1,cover,Vitalízate Fit,Catálogo 3D 2025,,,,"image",https://images.unsplash.com/photo-1556228578-ffcbf9f40f56,0|0|0,1,,
-p1,2,product,Proteína Vital Bio+,Planta premium,Suplementos,$119.900,"24g proteína vegetal;Cero azúcar;Aminoácidos",model3d,https://modelviewer.dev/shared-assets/models/Astronaut.glb,0|0.6|0,1.2,https://example.com/comprar/proteina,
-p2,3,product,Pre-Workout Selva+,Energía limpia,Suplementos,$69.900,"Cafeína moderada;Extractos botánicos",model3d,https://modelviewer.dev/shared-assets/models/RobotExpressive.glb,0.1|-0.6|0,1.15,https://example.com/comprar/preworkout,
-p3,4,product,Vitaminas ADN Vital,Complejo diario,Vitaminas,$49.900,"Complejo B;Zinc + Magnesio;Vitamina D3",model3d,https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb,0|0.4|0,1.1,https://example.com/comprar/vitaminas,
-s1,5,info,Cuidados y Calidad,Ingredientes seleccionados,,,,"image",https://images.unsplash.com/photo-1490645935967-10de6ba17061,0|0|0,1,,"Todos nuestros productos cumplen estándares internacionales."
